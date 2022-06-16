@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "Machine Learning for 3D Geometry"
+version = "1.0"
+description = "Exercises and Materials for the Lecture Machine Learning for 3D Geometry, Summer 2021"
+authors = ["Christian Diller, Yawar Siddiqui"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+jupyter = "^1.0.0"
+K3D = "^2.12.0"
+matplotlib = "^3.4.1"
+trimesh = "^3.9.14"
+torch = "^1.8.1"
+pytorch-lightning = "^1.2.8"
+scikit-image = "^0.18.1"
+pyrender = "^0.1.43"
+moviepy = "^1.0.3"
+pillow = "^7.2.0"
+tqdm = "^4.48.2"
+scipy = "^1.4.1"
+numpy = "^1.19.4"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
