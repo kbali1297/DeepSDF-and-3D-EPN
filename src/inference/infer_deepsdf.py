@@ -51,20 +51,20 @@ class InferenceHandlerDeepSDF:
 
         model = self.get_model()
 
-        # TODO: define loss criterion for optimization
+        # : define loss criterion for optimization
         loss_l1 = torch.nn.L1Loss()
 
         # initialize the latent vector that will be optimized
         latent = torch.ones(1, self.latent_code_length).normal_(mean=0, std=0.01).to(self.device)
         latent.requires_grad = True
 
-        # TODO: create optimizer on latent, use a learning rate of 0.005
+        # : create optimizer on latent, use a learning rate of 0.005
         optimizer = torch.optim.Adam([latent], lr = 0.005)
 
         for iter_idx in range(num_optimization_iters):
-            # TODO: zero out gradients
+            # : zero out gradients
             optimizer.zero_grad()
-            # TODO: sample a random batch from the observations, batch size = self.num_samples
+            # : sample a random batch from the observations, batch size = self.num_samples
             batch_indices = random.sample(range(points.shape[0]), self.num_samples)
 
             batch_points = points[batch_indices, :]
@@ -77,10 +77,10 @@ class InferenceHandlerDeepSDF:
             # same latent code is used per point, therefore expand it to have same length as batch points
             latent_codes = latent.expand(self.num_samples, -1)
 
-            # TODO: forward pass with latent_codes and batch_points
+            # : forward pass with latent_codes and batch_points
             predicted_sdf = model(torch.cat([latent_codes, batch_points], axis=1))
 
-            # TODO: truncate predicted sdf between -0.1, 0.1
+            # : truncate predicted sdf between -0.1, 0.1
             predicted_sdf = torch.clamp(predicted_sdf, -0.1, 0.1)
 
             # compute loss wrt to observed sdf
@@ -89,7 +89,7 @@ class InferenceHandlerDeepSDF:
             # regularize latent code
             loss += 1e-4 * torch.mean(latent.pow(2))
 
-            # TODO: backwards and step
+            # : backwards and step
             loss.backward()
 
             optimizer.step()
@@ -124,7 +124,7 @@ class InferenceHandlerDeepSDF:
         latent_codes = train_latent_codes(latent_code_indices)
         print(latent_codes.shape)
         for i in range(0, num_interpolation_steps + 1):
-            # TODO: interpolate the latent codes: latent_codes[0, :] and latent_codes[1, :]
+            # : interpolate the latent codes: latent_codes[0, :] and latent_codes[1, :]
             interpolated_code = latent_codes[0,:] + i * (latent_codes[1, :] - latent_codes[0,:])/num_interpolation_steps
             # reconstruct the shape at the interpolated latent code
             evaluate_model_on_grid(model, interpolated_code, self.device, 64, self.experiment / "interpolation" / f"{i:05d}_000.obj")

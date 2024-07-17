@@ -11,7 +11,7 @@ class DeepSDFDecoder(nn.Module):
         super().__init__()
         dropout_prob = 0.2
 
-        # TODO: Define model
+        #  Define model
         self.linear1 = nn.Sequential(nn.utils.weight_norm(nn.Linear(259, 512)),
                                      nn.ReLU(),
                                      nn.Dropout(dropout_prob)) 
@@ -43,7 +43,7 @@ class DeepSDFDecoder(nn.Module):
         :param x_in: B x (latent_size + 3) tensor
         :return: B x 1 tensor
         """
-        # TODO: implement forward pass
+        #  implement forward pass
         x = self.linear1(x_in)
         x = self.linear2(x)
         x = self.linear3(x)
